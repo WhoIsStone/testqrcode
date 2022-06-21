@@ -1,0 +1,120 @@
+<script type="text/javascript" src="https://cdn.jsdelivr.net/npm/html5-qrcode@2.2.1/html5-qrcode.min.js"></script>
+
+<div style="width: 500px center" id="reader"></div>
+<script>
+    let moldes = [
+
+        {
+            "id": 1,
+            "name": "RP-3001",
+            "description": "Molde 1",
+            "image": "https://www.molde.com/molde-1.jpg",
+            "parts": [
+                {
+                    "id": 1,
+                    "num": "P1",
+                    "2d": "0",
+                    "3d": "0",
+                    "nome": "SECURITY STRAP",
+                    "quantidade": "15",
+                    "dimref": "2X3X1",
+                    "material": "ABS",
+                    "obs": ""
+                },
+                {
+                    "id": 2,
+                    "num": "P032",
+                    "2d": "1",
+                    "3d": "1",
+                    "nome": "DOG",
+                    "quantidade": "4",
+                    "dimref": "2X3X1",
+                    "material": "PEP",
+                    "obs": "Peça Tótil Moldante"
+                },
+                {
+                    "id": 3,
+                    "num": "P3",
+                    "2d": "0",
+                    "3d": "1",
+                    "nome": "CAT",
+                    "quantidade": "15",
+                    "dimref": "2X3X1",
+                    "material": "ABS",
+                    "obs": ""
+                }
+            ]
+        }, {
+            "id": 2,
+            "name": "RP-3002",
+            "description": "Molde 2",
+            "image": "https://www.molde.com/molde-1.jpg",
+            "parts": [
+                {
+                    "id": 1,
+                    "num": "P1",
+                    "2d": "0",
+                    "3d": "0",
+                    "nome": "SECURITY STRAP",
+                    "quantidade": "15",
+                    "dimref": "2X3X1",
+                    "material": "ABS",
+                    "obs": ""
+                },
+                {
+                    "id": 2,
+                    "num": "P2",
+                    "2d": "1",
+                    "3d": "1",
+                    "nome": "DOG",
+                    "quantidade": "4",
+                    "dimref": "2X3X1",
+                    "material": "PEP",
+                    "obs": ""
+                },
+                {
+                    "id": 3,
+                    "num": "P3",
+                    "2d": "0",
+                    "3d": "1",
+                    "nome": "CAT",
+                    "quantidade": "15",
+                    "dimref": "2X3X1",
+                    "material": "ABS",
+                    "obs": ""
+                }
+            ]
+        }
+    ];
+
+    var html5QrcodeScanner = new Html5QrcodeScanner(
+        "reader", { fps: 30, qrbox: 600 });
+
+    function onScanSuccess(decodedText, decodedResult) {
+        // Handle on success condition with the decoded text or result.
+        console.log(`Scan result: ${decodedText}`, decodedResult);
+
+        html5QrcodeScanner.clear();
+        var moldeNum = decodedText.split(";")[0];
+        var partNum = decodedText.split(";")[1];
+        console.log(`Molde: ${moldeNum}`);
+        console.log(`Part: ${partNum}`);
+
+        moldes.forEach(molde => {
+            if(moldeNum == molde.name){
+                console.log(`Descrição: ${molde.description}`);
+                molde.parts.forEach(part => {
+                    if(partNum == part.num){
+                        console.log("tag");
+                        arrayDetalhes = ["Peça: " + part.num,"Nome: " + part.nome, "Quantidade: " + part.quantidade,"Dim/Ref: " + part.dimref, "Material: " + part.material, "Observações: " + part.obs]; 
+                        alert([''].concat(arrayDetalhes).join('\n').trim());
+                    }
+                });
+            }
+
+
+        });
+        location.reload();
+    }
+    html5QrcodeScanner.render(onScanSuccess);
+</script>
